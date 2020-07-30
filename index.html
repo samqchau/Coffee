@@ -2,32 +2,26 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Coffee1</title>
+    <title>Simple async sync example</title>
   </head>
   <body>
     <script>
-      let imgURL = 'mdn.github.io/f46f7aad-dba5-41d1-81a9-912904a4e6c9';
-      function loadAsset(url, type, callback) {
-        let xhr = new XMLHttpRequest();
-        xhr.open('GET', url);
-        xhr.responseType = type;
+      console.log ('Starting');
+      let image;
 
-        xhr.onload = function() {
-          callback(xhr.response);
-        };
-
-        xhr.send();
-      }
-
-      function displayImage(blob) {
-        let objectURL = URL.createObjectURL(blob);
-
-        let image = document.createElement('img');
+      fetch('Coffee.jpg').then((response) => {
+        console.log('It worked :)')
+        return response.blob();
+      }).then((myBlob) => {
+        let objectURL = URL.createObjectURL(myBlob);
+        image = document.createElement('img');
         image.src = objectURL;
         document.body.appendChild(image);
-      }
+      }).catch((error) => {
+        console.log('There has been a problem with your fetch operation: ' + error.message);
+      });
 
-      loadAsset(imgURL, 'blob', displayImage);
+      console.log ('All done!');
     </script>
   </body>
 </html>
