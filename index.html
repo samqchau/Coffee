@@ -2,26 +2,32 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Here's a cup of coffee</title>
+    <title>Simple XHR async callback example</title>
   </head>
   <body>
     <script>
-      console.log ('Starting');
-      let image;
+      let imgURL = 'https://mdn.github.io/4bbbaa67-98e6-48ce-9e1e-affd4c134235'
+      function loadAsset(url, type, callback) {
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', url);
+        xhr.responseType = type;
 
-      fetch('https://github.com/samqchau/Coffee/blob/master/Coffee.jpg?raw=true').then((response) => {
-        console.log('It worked :)')
-        return response.blob();
-      }).then((myBlob) => {
-        let objectURL = URL.createObjectURL(myBlob);
-        image = document.createElement('img');
+        xhr.onload = function() {
+          callback(xhr.response);
+        };
+
+        xhr.send();
+      }
+
+      function displayImage(blob) {
+        let objectURL = URL.createObjectURL(blob);
+
+        let image = document.createElement('img');
         image.src = objectURL;
         document.body.appendChild(image);
-      }).catch((error) => {
-        console.log('There has been a problem with your fetch operation: ' + error.message);
-      });
+      }
 
-      console.log ('All done!');
+      loadAsset('imgURL', 'blob', displayImage);
     </script>
   </body>
 </html>
