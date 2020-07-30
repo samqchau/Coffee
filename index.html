@@ -6,6 +6,7 @@
   </head>
   <body>
     <script>
+      let imgURL = 'https://mdn.github.io/learning-area/javascript/asynchronous/introducing/async-sync.html'
       function loadAsset(url, type, callback) {
         let xhr = new XMLHttpRequest();
         xhr.open('GET', url);
@@ -26,7 +27,7 @@
         document.body.appendChild(image);
       }
 
-      loadAsset('Coffee.jpg', 'blob', displayImage);
+      loadAsset('imgURL', 'blob', displayImage);
     </script>
   </body>
 </html>
